@@ -564,9 +564,9 @@ header {
 }
 
 /* PCでは改行を無効化 */
- br.sp-br {
-    display: none !important;
-  }
+br.sp-br {
+  display: none !important;
+}
 
 /* 全体の並び */
 .icon-list {
@@ -654,9 +654,12 @@ header {
 }
 
 /* 文字数の多い2つだけフォントサイズを微調整 */
-.icon-item:nth-child(1) .text-large, /* 歯科医院がいいの？ */
-.icon-item:nth-child(4) .text-large { /* 時間がかかる？ */
-  font-size: 20px !important; /* ← 少し小さくして1行に収める */
+.icon-item:nth-child(1) .text-large,
+/* 歯科医院がいいの？ */
+.icon-item:nth-child(4) .text-large {
+  /* 時間がかかる？ */
+  font-size: 20px !important;
+  /* ← 少し小さくして1行に収める */
 }
 
 
@@ -666,14 +669,17 @@ header {
    PC版（768px以上）
 ============================ */
 @media screen and (min-width: 768px) {
+
   /* ===== アイコンホバーアニメーション（楕円タイプ） ===== */
   .icon-item a {
     position: relative;
     overflow: hidden;
-    border-radius: 50px / 30px; /* ← ← ← 楕円形（横長）にするポイント！ */
+    border-radius: 50px / 30px;
+    /* ← ← ← 楕円形（横長）にするポイント！ */
     /* 左が横方向の丸み、右が縦方向の丸み */
     transition: transform 0.4s ease, box-shadow 0.4s ease;
-    padding: 20px 30px; /* ← 少し余白をつけてバランスを整える */
+    padding: 20px 30px;
+    /* ← 少し余白をつけてバランスを整える */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -692,13 +698,12 @@ header {
     left: -75%;
     width: 50%;
     height: 100%;
-    border-radius: 50px / 30px; /* ← 光も楕円に沿わせる */
-    background: linear-gradient(
-      120deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.4) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
+    border-radius: 50px / 30px;
+    /* ← 光も楕円に沿わせる */
+    background: linear-gradient(120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%);
     transform: skewX(-25deg);
   }
 
@@ -729,7 +734,7 @@ header {
   }
 
   /* 改行クラス（spのみ表示） */
-   br.sp-br {
+  br.sp-br {
     display: inline !important;
   }
 
@@ -1636,6 +1641,13 @@ header {
     transform: translateY(1px);
     /* ← 微調整で下に少し寄せる */
   }
+
+  /* 電話番号リンクの色を強制的に白にする */
+  a[href^="tel"] {
+    color: #fff !important;
+    text-decoration: none !important;
+  }
+
 }
 
 
@@ -2425,7 +2437,8 @@ header {
 
 .select-box input {
   width: 100%;
-  padding: 12px 42px 12px 12px; /* 右側にアイコン分の余白 */
+  padding: 12px 42px 12px 12px;
+  /* 右側にアイコン分の余白 */
   font-size: 16px;
   border: 1px solid #32ABB6;
   border-radius: 6px;
@@ -2449,7 +2462,7 @@ header {
   transition: opacity 0.2s ease;
 }
 
-.select-box input:hover + svg {
+.select-box input:hover+svg {
   opacity: 1;
 }
 
@@ -2468,8 +2481,10 @@ header {
 .reservation-form input:focus,
 .reservation-form textarea:focus {
   outline: none;
-  border: 2px solid #42686C; /* ← ここで指定した色に変わる */
-  box-shadow: 0 0 6px rgba(87, 87, 87, 0.2); /* ふんわりした光 */
+  border: 2px solid #42686C;
+  /* ← ここで指定した色に変わる */
+  box-shadow: 0 0 6px rgba(87, 87, 87, 0.2);
+  /* ふんわりした光 */
 }
 
 
@@ -2484,14 +2499,16 @@ header {
 /* --- PC版のみアイコン位置を右へ --- */
 @media screen and (min-width: 768px) {
   .select-box svg {
-    right: 0; /* ← 元の12px → 20pxにして、より右寄せ */
+    right: 0;
+    /* ← 元の12px → 20pxにして、より右寄せ */
     width: 18px;
     height: 18px;
   }
 
   /* 入力欄との距離バランス調整 */
   .select-box input {
-    padding-right: 38px; /* ← アイコンの新しい位置に合わせて余白を少し広げる */
+    padding-right: 38px;
+    /* ← アイコンの新しい位置に合わせて余白を少し広げる */
   }
 }
 
