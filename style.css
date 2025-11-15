@@ -1,0 +1,2941 @@
+/* 全体の基本設定 */
+* {
+  box-sizing: border-box;
+}
+
+/* 横スクロールを防ぐ */
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- PC版（ベース） --- */
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  color: #3C5D61;
+  padding: 40px 50px;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: flex-start;
+  /* 左寄せに変更 */
+  align-items: center;
+  gap: 980px;
+  /* ロゴとハンバーガーの間隔を自動で開ける */
+}
+
+
+/* ロゴ全体を横並びに */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* アイコンと文字の間隔 */
+}
+
+/* 文字部分 */
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  line-height: 1.2;
+  /* 行間調整 */
+  height: 80px;
+  white-space: nowrap;
+
+}
+
+/* 漢字部分 */
+.logo-text .jp {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 700;
+  /* Bold */
+  color: #505050;
+  margin: 0;
+  font-size: 41px;
+  /* お好みで調整 */
+  line-height: 1;
+}
+
+/* アルファベット部分 */
+.logo-text .en {
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  /* Regular */
+  color: #505050;
+  margin: 0;
+  font-size: 23px;
+  /* お好みで調整 */
+  white-space: nowrap;
+  line-height: 1;
+}
+
+
+/* ==============================
+   ハンバーガーメニュー（共通）
+============================== */
+/* ボタン本体（位置はそのまま） */
+.hamburger {
+  position: absolute;
+  top: 20px;
+  right: 60px !important;
+  width: 42px;
+  height: 32px;
+  /* 偶数px推奨 */
+  display: block;
+  /* ← flexは使わない */
+  cursor: pointer;
+  z-index: 3000;
+}
+
+/* 3本のラインを絶対配置で中央基準に */
+.hamburger span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3.5px;
+  background-color: #3C5D61;
+  border-radius: 2px;
+  transition: .3s ease;
+  transform-origin: center;
+  /* ← 回転中心を揃える */
+}
+
+/* 初期位置（上・中央・下） */
+.hamburger span:nth-child(1) {
+  top: 0;
+}
+
+.hamburger span:nth-child(2) {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hamburger span:nth-child(3) {
+  bottom: 0;
+}
+
+/* アクティブ時（X） */
+.hamburger.active span {
+  background-color: #fff;
+}
+
+.hamburger.active span:nth-child(1) {
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+
+.hero-section {
+  height: 564px;
+  background-image: url('images/hero-pc.jpg');
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-section .inner {
+
+  padding-top: 200px;
+  padding-left: 40px;
+  justify-content: flex-start;
+  /* 左寄せに変更 */
+  color: #42686C;
+  /* 文字色 */
+  text-align: left;
+  font-size: 40px;
+  font-family: Noto Serif JP;
+  font-weight: 700;
+  line-height: 120px;
+  letter-spacing: 0.05em;
+}
+
+.fukuro {
+  /* --- アウトラインをtext-shadowで再現（白い縁） --- */
+  text-shadow:
+    1px 0 #fff,
+    -1px 0 #fff,
+    0 1px #fff,
+    0 -1px #fff,
+    1px 1px #fff,
+    -1px -1px #fff,
+    1px -1px #fff,
+    -1px 1px #fff,
+
+    /* --- ドロップシャドウ --- */
+    4px 4px 6px rgba(0, 0, 0, 0.25);
+}
+
+
+
+/* フルスクリーンでフェード表示されるメニュー */
+.overlay-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  /* ← 余白含めて正確に計算 */
+  background: rgba(109, 177, 183, 0.98);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 2000;
+}
+
+.overlay-menu.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* メニュー内テキスト */
+.overlay-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px 0;
+  text-align: center;
+}
+
+.overlay-menu ul li {
+  margin: 12px 0;
+}
+
+.overlay-menu ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  display: inline-block;
+  position: relative;
+  padding-bottom: 6px;
+  font-weight: 400;
+}
+
+.overlay-menu ul li a::after {
+  content: "";
+  display: block;
+  width: 320px;
+  /* ← 下線の長さを固定（お好みで調整） */
+  height: 1.5px;
+  background-color: #fff;
+  margin: 14px auto 0 auto;
+  opacity: 0.9;
+}
+
+/* 下部の電話と受付時間 */
+.menu-bottom {
+  text-align: center;
+  font-size: 14px;
+}
+
+.menu-bottom .phone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  /* 電話番号の文字色 */
+  margin-bottom: 25px;
+  transform: translateY(-50px);
+  /* ← 少し上へ */
+}
+
+.menu-bottom .phone-icon {
+  width: 48px;
+  height: auto;
+  /* 白いSVGならfilter不要 */
+}
+
+/* 受付時間ボックス（抜き文字風） */
+.reception-box {
+  display: block;
+  background: transparent;
+  margin-top: 6px;
+  text-align: center;
+  border: none !important;
+  /* ← 全体の白枠を完全に消す */
+  box-shadow: none !important;
+}
+
+/* 全体の文字 */
+.reception-text {
+  color: #fff;
+  /* 全体の文字は白 */
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 「受付時間」だけ白背景＋水色文字（＝抜き文字風） */
+.reception-text .time-label {
+  display: inline-block;
+  background: #fff;
+  /* ← 背景を白塗り */
+  color: #6DB1B7;
+  /* ← 水色文字（背景色と合わせる） */
+  border: 2px solid #fff;
+  /* ← 枠も白線で囲む */
+  padding: 2px 6px;
+  border-radius: 0;
+  /* ← 角丸なし（四角に） */
+  margin-right: 6px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+
+/* ========================================
+   スマホ専用（幅767px以下）
+======================================== */
+@media screen and (max-width: 767px) {
+
+  /* フルスクリーンメニュー全体 */
+  .overlay-menu {
+    background: rgba(109, 177, 183, 0.98);
+    justify-content: center;
+    /* 上寄せ → 画面中央寄せ */
+    align-items: center;
+    padding: 0;
+    /* 余白リセット */
+    height: 100vh;
+    /* 画面ぴったりに固定 */
+    overflow: hidden;
+    /* スクロール防止 */
+  }
+
+  /* メニューリスト */
+  .overlay-menu ul {
+    margin: 0 0 24px 0;
+    /* 下の余白を小さく */
+  }
+
+  .overlay-menu ul li {
+    margin: 10px 0;
+  }
+
+  .overlay-menu ul li a {
+    font-size: 18px;
+    padding-bottom: 6px;
+  }
+
+  .overlay-menu ul li a::after {
+    width: 340px;
+    height: 1.3px;
+    margin: 16px auto 0 auto;
+  }
+
+  /* 電話番号部分 */
+  .menu-bottom {
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .menu-bottom .phone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 36px !important;
+    transform: translateY(-40px);
+    /* ほんの少し上へ */
+    margin-bottom: 10px;
+    /* 余白最小限 */
+  }
+
+  .menu-bottom .phone-icon {
+    width: 48px !important;
+    height: auto !important;
+  }
+
+  /* 受付時間ボックス */
+  /* 全体のボックス（枠を消す） */
+  .reception-box {
+    display: block;
+    background: transparent;
+    margin-top: 6px;
+    text-align: center;
+    border: none !important;
+    /* ← 全体の白枠を完全に消す */
+    box-shadow: none !important;
+  }
+
+  /* 全体の文字 */
+  .reception-text {
+    color: #fff;
+    /* 全体の文字は白 */
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* 「受付時間」だけ白背景＋水色文字（＝抜き文字風） */
+  .reception-text .time-label {
+    display: inline-block;
+    background: #fff;
+    /* ← 背景を白塗り */
+    color: #6DB1B7;
+    /* ← 水色文字（背景色と合わせる） */
+    border: 2px solid #fff;
+    /* ← 枠も白線で囲む */
+    padding: 2px 6px;
+    border-radius: 0;
+    /* ← 角丸なし（四角に） */
+    margin-right: 6px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+}
+
+
+
+
+
+/* ------------------------------
+   スマホ（768px以下）のレスポンシブ対応
+------------------------------ */
+@media screen and (max-width: 768px) {
+
+  /* =========================
+      ヘッダー
+  ========================= */
+  header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    height: 60px;
+    padding: 0 16px;
+    background: transparent;
+  }
+
+  .header-inner {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  /* --- ロゴ --- */
+  .logo {
+    position: absolute;
+    top: 16px;
+    left: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .logo img {
+    height: 34px;
+    width: auto;
+    display: block;
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    line-height: 1.1;
+  }
+
+  .logo-text .jp {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 3px 0;
+  }
+
+  .logo-text .en {
+    font-size: 8px;
+    font-family: Arial, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin: 2px 0 0 0;
+  }
+
+  /* --- ハンバーガー --- */
+  .hamburger {
+    position: absolute !important;
+    /* ← fixedをやめる */
+    top: 15px !important;
+    right: 18px !important;
+    /* ← 少し右寄せ */
+    width: 32px !important;
+    /* ← スマホは少し小さめ */
+    height: 24px !important;
+  }
+
+  .hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #3C5D61;
+    border-radius: 2px;
+  }
+
+  /* =========================
+      ヒーローセクション
+  ========================= */
+  .hero-section {
+    /* 通常SP画像 */
+    background-image: url('images/hero-sp.jpg');
+    background-size: cover;
+    background-position: center top;
+    height: 385px;
+
+    /* 高解像度（2倍画像）対応 */
+    background-image: image-set(url('images/hero-sp.jpg') 1x,
+        url('images/hero-sp@2x.jpg') 2x);
+  }
+
+  .hero-section .inner {
+    padding-top: 180px;
+    padding-left: 16px;
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: left;
+    color: #42686C;
+    width: 100%;
+  }
+
+  .hero-section .inner h1 {
+    margin: 0;
+  }
+}
+
+
+
+
+
+
+
+/* ============================
+   共通設定（全デバイス共通）
+============================ */
+/* セクションタイトル */
+.intro-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: #42686C;
+  text-align: center;
+  margin-top: 60px;
+  /* ← 上の余白を追加 */
+  margin-bottom: 50px;
+  white-space: nowrap !important;
+}
+
+/* PCでは改行を無効化 */
+ br.sp-br {
+    display: none !important;
+  }
+
+/* 全体の並び */
+.icon-list {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  /* アイコン間の距離 */
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* 各アイコンセット */
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 200px;
+  /* height を削除！高さ固定をやめて自然に詰まるように */
+  box-sizing: border-box;
+}
+
+/* 上のアイコン画像 */
+.icon-item .icon-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  /* アイコンとテキストの間を調整 */
+}
+
+.icon-item .icon-top img {
+  width: 80px;
+  height: auto;
+}
+
+/* テキスト部分 */
+.icon-item p {
+  font-family: 'Noto Sans JP', sans-serif;
+  color: #32ABB6;
+  line-height: 1.0;
+  /* ← 1.4から1.1にして行間を詰める */
+  margin: 0 0 0px 0;
+  /* テキストと下矢印の間 */
+  padding: 0;
+}
+
+.text-small {
+  font-size: 16px;
+  display: block;
+}
+
+.text-large {
+  font-size: 22px;
+  display: block;
+}
+
+
+/* 下矢印 */
+.icon-item .icon-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  /* 不要な空白をなくす */
+}
+
+.icon-item .icon-bottom img {
+  width: 80px;
+  height: auto;
+}
+
+.icon-item a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  width: 200px;
+  transition: opacity 0.3s;
+}
+
+.icon-item .text-large {
+  white-space: nowrap !important;
+}
+
+/* 文字数の多い2つだけフォントサイズを微調整 */
+.icon-item:nth-child(1) .text-large, /* 歯科医院がいいの？ */
+.icon-item:nth-child(4) .text-large { /* 時間がかかる？ */
+  font-size: 20px !important; /* ← 少し小さくして1行に収める */
+}
+
+
+
+
+/* ============================
+   PC版（768px以上）
+============================ */
+@media screen and (min-width: 768px) {
+  /* ===== アイコンホバーアニメーション（楕円タイプ） ===== */
+  .icon-item a {
+    position: relative;
+    overflow: hidden;
+    border-radius: 50px / 30px; /* ← ← ← 楕円形（横長）にするポイント！ */
+    /* 左が横方向の丸み、右が縦方向の丸み */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    padding: 20px 30px; /* ← 少し余白をつけてバランスを整える */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .icon-item a:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(50, 171, 182, 0.25);
+  }
+
+  /* 光の筋（やわらかい楕円内の反射） */
+  .icon-item a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    border-radius: 50px / 30px; /* ← 光も楕円に沿わせる */
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+  }
+
+  .icon-item a:hover::after {
+    left: 125%;
+    transition: left 0.8s ease;
+  }
+}
+
+
+
+
+
+
+@media screen and (max-width: 767px) {
+
+  /* タイトル（スマホで少し小さく） */
+  section.intro-section .intro-title {
+    font-size: 22px !important;
+    line-height: 1.6 !important;
+    color: #42686C;
+    text-align: center;
+    margin: 40px auto 30px auto !important;
+    white-space: normal !important;
+    /* ← 自然な改行を許可 */
+    word-break: keep-all !important;
+    /* ← 日本語の途中改行を防ぐ */
+  }
+
+  /* 改行クラス（spのみ表示） */
+   br.sp-br {
+    display: inline !important;
+  }
+
+  /* セクション全体（中央寄せ） */
+  section.intro-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100% !important;
+  }
+
+  section.intro-section .inner {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto !important;
+    text-align: center;
+  }
+
+
+
+  /* アイコンリスト（2列配置・中央寄せ） */
+  section.intro-section .icon-list {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 12px !important;
+    justify-items: center;
+    align-items: start;
+    margin: 0 auto !important;
+    max-width: 300px !important;
+    padding-left: 4px;
+  }
+
+  /* 各アイコンブロック */
+  section.intro-section .icon-item {
+    width: 130px !important;
+  }
+
+  /* 上下のアイコン画像（@2x対応） */
+  section.intro-section .icon-top img,
+  section.intro-section .icon-bottom img {
+    width: 80px !important;
+    /* ← Figma実寸が80pxならここを使用 */
+    height: auto;
+    image-rendering: -webkit-optimize-contrast;
+    /* ブラウザ補正でシャープに */
+  }
+
+  /* テキスト（小・大） */
+  section.intro-section .text-small {
+    font-size: 13px !important;
+  }
+
+  section.intro-section .text-large {
+    font-size: 16px !important;
+    white-space: nowrap !important;
+    /* 折り返し防止 */
+  }
+}
+
+
+
+
+/* =========================================
+   特徴セクション（PC＋SP統合修正版）
+========================================= */
+
+/* 共通 */
+.feature-section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Noto Serif JP', serif;
+  background-color: #fff;
+  z-index: 1;
+  padding: 120px 0;
+  /* 前後のセクションにかぶらない余白 */
+}
+
+.feature-section .inner {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* 背景画像 */
+.feature-bg {
+  position: relative;
+  width: 50%;
+}
+
+.feature-bg img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* テキスト部分 */
+.feature-text {
+  position: absolute;
+  top: 50%;
+  /* 画像の中央に重ねる */
+  left: 48%;
+  /* 画像の右側に自然に重なる */
+  transform: translateY(-50%);
+  width: 48%;
+  z-index: 2;
+  color: #333;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.85);
+  /* 背景半透明白 */
+  border-radius: 0;
+  /* 角丸なし */
+  box-sizing: border-box;
+}
+
+.feature-text h2 {
+  font-size: 28px;
+  color: #42686C;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.feature-item {
+  margin-bottom: 20px;
+}
+
+.feature-item h3 {
+  font-size: 18px;
+  color: #32ABB6;
+  margin-bottom: 6px;
+}
+
+.feature-item p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #333;
+}
+
+/* =========================================
+   PC版レイアウト調整（768px以上）
+========================================= */
+@media screen and (min-width: 768px) {
+
+  .feature-section {
+    position: relative;
+    width: 100%;
+    background-color: #fff;
+    overflow: visible;
+    font-family: 'Noto Serif JP', serif;
+    padding: 90px 0;
+    /* 上下の余白キープ */
+  }
+
+  .feature-section .inner {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 820px;
+    /* セクション全体を少し高くして余裕を作る */
+  }
+
+  /* 画像：左上固定 */
+  .feature-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50vw;
+    z-index: 1;
+  }
+
+  .feature-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* テキスト部分 */
+  .feature-text {
+    position: absolute;
+    top: 60%;
+    /* ← あなたが合わせた位置をそのまま使用 */
+    left: 35%;
+    /* ← この位置もキープ */
+    transform: translateY(-50%);
+    background: none;
+    border-radius: 0;
+    z-index: 2;
+
+    width: 80%;
+    /* ← しっかり幅を指定。右端まで届くバランス */
+    max-width: none;
+    padding: 60px 90px;
+    box-sizing: border-box;
+
+    color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 400;
+  }
+
+  .feature-text h2 {
+    font-size: 28px;
+    color: #42686C;
+    font-weight: 400;
+    margin-bottom: 25px;
+    white-space: nowrap;
+  }
+
+  /* SP用の分割spanを横並びに戻す */
+  .feature-text h2 span {
+    display: inline;
+    letter-spacing: 0;
+    /* ← 通常間隔に戻す */
+  }
+
+
+  .feature-item {
+    margin-bottom: 20px;
+  }
+
+  .feature-item h3 {
+    font-size: 18px;
+    color: #32ABB6;
+    font-weight: 400;
+    /* ← サブタイトルも統一 */
+    margin-bottom: 6px;
+  }
+
+  .feature-item p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+    font-weight: 400;
+    /* ← 本文も統一 */
+  }
+
+  /* 背景の四角 */
+  .feature-text .text-bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(245, 253, 254, 0.8);
+    border-radius: 0;
+    z-index: -1;
+  }
+}
+
+
+
+/* =========================================
+   スマホ版
+========================================= */
+@media screen and (max-width: 767px) {
+  .feature-section {
+    position: relative !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #E9F9FA !important;
+    font-family: 'Noto Serif JP', serif !important;
+    overflow: hidden !important;
+  }
+
+  .feature-section .inner {
+    all: unset;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .feature-bg {
+    position: relative !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .feature-bg img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    border-radius: 0 !important;
+  }
+
+  /* テキスト部分 */
+  .feature-text {
+    position: relative !important;
+    width: 95% !important;
+    /* ← 少し広げて左寄せしやすく */
+    max-width: 440px !important;
+    margin: -60px auto -2px 0 !important;
+    /* ← auto解除して左基準に */
+    padding: 30px 26px !important;
+
+    background: rgba(245, 253, 254, 0.8) !important;
+    /* ← #F5FDFEの80%透明 */
+    border-radius: 0 !important;
+    color: #333 !important;
+    font-weight: 400 !important;
+    font-family: 'Noto Serif JP', serif !important;
+    text-align: left !important;
+    z-index: 2 !important;
+    box-sizing: border-box !important;
+
+    transform: translateX(-45%) !important;
+    /* ← 左へさらに4%移動 */
+  }
+
+  /* タイトル */
+  .feature-text h2 {
+    font-size: 20px !important;
+    color: #42686C !important;
+    font-family: 'Noto Serif JP', serif !important;
+    font-weight: 400 !important;
+    line-height: 1.4 !important;
+    text-align: left !important;
+    margin: 0 0 15px 0 !important;
+    letter-spacing: 0 !important;
+  }
+
+  /* 1行目（五反田歯科医院の） */
+  .feature-text h2 .line1 {
+    display: block !important;
+    letter-spacing: -0.06em !important;
+    margin-bottom: 3px !important;
+  }
+
+  /* 2行目（ホワイトニング） */
+  .feature-text h2 .line2 {
+    display: block !important;
+    letter-spacing: 0.07em !important;
+  }
+
+  /* =========================================
+   h3 フォントウエイト強制修正
+========================================= */
+  .feature-section .feature-text h3 {
+    font-family: 'Noto Serif JP', serif !important;
+    font-weight: 400 !important;
+    /* ← レギュラー固定 */
+    color: #32ABB6 !important;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 痛みセクション全体 */
+.pain-section {
+  padding: 80px 0;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* セクションタイトル全体 */
+.pain-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* ブロック全体を中央に */
+  font-family: 'Noto Serif JP', serif;
+  color: #42686C;
+  line-height: 0;
+  margin-bottom: 10px;
+  text-align: center;
+  /* タイトルは中央揃え */
+}
+
+/* 「ホワイトニングは」部分 */
+.pain-header .kicker {
+  font-size: 20px;
+  line-height: 0;
+}
+
+/* 「いたいの？」部分 */
+.pain-header h2 {
+  font-size: 28px;
+  line-height: 0.8;
+  margin-top: 1px;
+}
+
+/* 説明文だけ左揃え */
+.pain-header .desc {
+  font-family: 'Noto Sans JP', sans-serif;
+  color: #575757;
+  font-size: 16px;
+  line-height: 1.8;
+  text-align: left;
+  /* 説明文は左揃え */
+  margin-top: 20px;
+  max-width: 700px;
+  /* 中央揃えブロック内で左揃え */
+}
+
+
+
+/* オフィス・ホームホワイトニングブロック */
+.pain-block {
+  display: flex;
+  justify-content: center;
+  /* ページ中央に寄せる */
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 0px;
+}
+
+/* テキストと画像を横並びにする行 */
+.pain-row {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+}
+
+/* テキスト部分 */
+.pain-text {
+  flex: 1.2;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: #575757;
+  font-size: 16px;
+  line-height: 1.8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* テキストブロック中央寄せ */
+  /* 👈 ここに追記：テキスト内容を右に寄せる */
+  /* 👈 ここに追記：左側に余白を作り、ブロック全体を右にずらす */
+  margin-left: 30px;
+}
+
+
+/* サブタイトル h3 */
+.pain-text h3 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 22px;
+  color: #32ABB6;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
+/* 画像部分 */
+.pain-img {
+  flex: 0.8;
+  display: flex;
+  align-items: center;
+  /* 画像を縦中央に寄せる */
+  justify-content: center;
+}
+
+/* 画像部分（最重要） */
+.pain-img img {
+  max-height: 100%;
+  width: 320px;
+  border-radius: 0;
+  object-fit: cover;
+  /* 垂直方向のずれをなくすことで中央揃えが成立 */
+  transform: translateY(22px);
+}
+
+
+@media screen and (max-width: 767px) {
+
+  /* セクション全体 */
+  .pain-section {
+    padding-top: 60px;
+    /* ← 上はそのまま */
+    padding-bottom: 10px;
+    /* ← 下だけ小さくして詰める（60px→20px） */
+  }
+
+  /* タイトル全体 */
+  .pain-header {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  /* 「ホワイトニングは」部分 */
+  .pain-header .kicker {
+    font-size: 18px;
+    line-height: 1.3;
+    margin-bottom: 2px;
+    /* ← タイトルとの間を少し詰める */
+  }
+
+  /* 「いたいの？」部分 */
+  .pain-header h2 {
+    font-size: 26px;
+    line-height: 1.1;
+    /* ← 行間を少し詰める */
+    margin-top: 0;
+  }
+
+  /* 説明文 */
+  .pain-header .desc {
+    font-size: 15px;
+    line-height: 1.8;
+    max-width: 90%;
+    margin: 20px auto 0;
+    text-align: left;
+  }
+
+  /* 各ブロック */
+  .pain-block {
+    margin-bottom: 50px;
+  }
+
+  /* テキストと画像を縦並びに変更 */
+  .pain-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* テキスト部分 */
+  .pain-text {
+    margin-left: 0;
+    text-align: left;
+    font-size: 15px;
+    line-height: 1.8;
+    width: 90%;
+  }
+
+  /* 「オフィスホワイトニング」「ホームホワイトニング」タイトル */
+  .pain-text h3 {
+    font-size: 20px;
+    text-align: left;
+    /* ← 左寄せに変更 */
+    margin-bottom: 10px;
+  }
+
+  /* 画像部分 */
+  .pain-img {
+    order: 0;
+    /* 画像をテキストの上に配置 */
+    width: 100%;
+  }
+
+  .pain-img img {
+    width: 100%;
+    /* ← 横幅いっぱいに */
+    height: auto;
+    border-radius: 0;
+    transform: none;
+    object-fit: cover;
+  }
+
+  /* 2つ目の「ホームホワイトニング」だけ画像を下にしたい場合 */
+  .pain-block:nth-of-type(3) .pain-img {
+    order: 1;
+  }
+}
+
+
+
+/* ============================
+   共通設定（全デバイス共通）
+============================ */
+.contact-phone-section {
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  padding: 50px 0;
+  box-sizing: border-box;
+}
+
+.contact-heading {
+  font-family: 'Noto Serif JP', serif !important;
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+  color: #fff !important;
+  margin: 0 !important;
+  font-weight: 400 !important;
+}
+
+/* ============================
+   PC版
+============================ */
+@media screen and (min-width: 768px) {
+
+  .contact-container {
+    width: 968px;
+    height: 334px;
+    background-color: #6DB1B7;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+
+  .contact-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .contact-heading {
+    font-family: 'Noto Serif JP', serif !important;
+    font-size: 30px !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+    text-align: right !important;
+    margin: 0 !important;
+    color: #fff !important;
+  }
+
+  .contact-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
+  .contact-phone {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .phone-icon {
+    width: 64px;
+    height: auto;
+  }
+
+  .phone-number {
+    font-size: 72px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .contact-time {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .contact-time .time-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+
+  .contact-time .time-row span {
+    font-size: 21px;
+    font-weight: 400;
+  }
+
+  .contact-time .time-row:first-child span:first-child {
+    font-size: 31px;
+    margin-right: 40px;
+  }
+
+  .contact-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .contact-logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .contact-logo {
+    height: 47px;
+    width: auto;
+  }
+
+  .contact-logo-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 47px;
+  }
+
+  .contact-logo-text .jp {
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: #fff;
+  }
+
+  .contact-logo-text .en {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #fff;
+  }
+
+  .contact-btn {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16px;
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 10px 20px;
+    background: transparent;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  .contact-btn:hover {
+    background: #fff;
+    color: #6DB1B7;
+    border-color: #6DB1B7;
+  }
+}
+
+/* ============================
+   スマホ版
+============================ */
+@media screen and (max-width: 767px) {
+
+  .contact-phone-section {
+    background-color: #fff !important;
+    padding: 16px 0 16px !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin: 10px 0 !important;
+    /* ← 上下の外側の余白を詰める */
+  }
+
+  .contact-container {
+    background-color: #6DB1B7 !important;
+    width: 84% !important;
+    padding: 10px 10px 20px !important;
+    color: #fff !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .contact-left {
+    width: 100%;
+    margin: 0 0 4px !important;
+    /* 下の余白を6px→4pxへ */
+  }
+
+  .contact-heading {
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    line-height: 1.8 !important;
+    color: #fff !important;
+    text-align: left !important;
+  }
+
+  .contact-phone {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin: 0 0 6px !important;
+    /* 下の余白を8px→6pxへ */
+  }
+
+  .phone-icon {
+    width: 35px !important;
+    height: auto !important;
+  }
+
+  .phone-number {
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    margin: 24px 0 24px 0 !important;
+  }
+
+  /* 受付時間 */
+  .contact-time {
+    color: #fff !important;
+    text-align: left !important;
+    width: 100% !important;
+    margin: 8px 0 22px !important;
+  }
+
+  .contact-time .time-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .contact-time .time-row:first-child {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .contact-time .time-row:first-child .time-label {
+    font-size: 12px;
+    font-weight: 700;
+    background: #fff;
+    color: #6DB1B7;
+    border: 2px solid #fff;
+    padding: 2px 5px;
+  }
+
+  .contact-time .time-row:nth-child(2) {
+    margin-left: 18px;
+    margin-bottom: 8px;
+  }
+
+  .contact-time .time-row:nth-child(2) span,
+  .contact-time .time-row:nth-child(3) span {
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .contact-time .time-row:nth-child(3) {
+    margin-left: 18px;
+    margin-top: 8px;
+  }
+
+  /* ロゴ・ボタン */
+  .contact-bottom {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .contact-btn {
+    font-family: 'Noto Serif JP', serif !important;
+    font-size: 12px !important;
+    color: #fff !important;
+    border: 1px solid #fff !important;
+    padding: 10px 24px !important;
+    text-decoration: none !important;
+    background: transparent !important;
+    display: inline-block !important;
+  }
+
+  .contact-btn:hover {
+    background: #fff !important;
+    color: #6DB1B7 !important;
+  }
+
+  .contact-logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 5px;
+  }
+
+  .contact-logo {
+    width: 34px;
+    height: auto;
+  }
+
+  .contact-logo-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 34px;
+    /* ← ロゴ画像と同じ高さに固定 */
+    line-height: 1.1;
+    /* ← 縦方向の詰まり具合を調整 */
+  }
+
+  .contact-logo-text .jp {
+    font-family: 'Noto Serif JP', serif !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    margin: 6px !important;
+    /* ← 下マージンをなくす */
+  }
+
+  .contact-logo-text .en {
+    font-family: Arial, sans-serif;
+    font-size: 10px !important;
+    letter-spacing: 0.03em !important;
+    margin: 0 !important;
+    transform: translateY(1px);
+    /* ← 微調整で下に少し寄せる */
+  }
+}
+
+
+
+
+/* === price-section === */
+.price-section {
+  background-color: #ffffff;
+  color: #575757;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.price-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* ブロック全体を中央に */
+  font-family: 'Noto Serif JP', serif;
+  color: #42686C;
+  line-height: 0;
+  margin-bottom: 10px;
+  text-align: center;
+  /* タイトルは中央揃え */
+}
+
+.price-header .kicker {
+  font-size: 20px;
+  line-height: 0;
+
+}
+
+.price-header h2 {
+  font-size: 28px;
+  line-height: 0.8;
+  margin-top: 1px;
+
+}
+
+.price-header .desc {
+  font-family: 'Noto Sans JP', sans-serif;
+  color: #575757;
+  font-size: 16px;
+  line-height: 1.8;
+  text-align: left;
+  /* 説明文は左揃え */
+  margin-top: 20px;
+  max-width: 700px;
+  /* 中央揃えブロック内で左揃え */
+}
+
+/* プラン全体 */
+.price-table {
+  display: flex;
+  justify-content: center;
+  gap: 0px;
+  flex-wrap: nowrap;
+}
+
+.plan {
+  background: #ffffff;
+  width: 300px;
+  padding: 25px 0px;
+  text-align: center;
+}
+
+/* 最後のプランだけ右の線を消す */
+.plan:last-child {
+  border-right: none;
+}
+
+.plan-name {
+  color: #32ABB6;
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+/* プレミアム・スタンダード・トライアル下の太いライン */
+.plan-line {
+  width: 967px;
+  max-width: 100%;
+  height: 4.35px;
+  background-color: #6DB1B7;
+  margin: 0 auto 20px;
+}
+
+/* 金額 */
+.plan-price {
+  font-size: 24px;
+  font-weight: 400;
+  color: #42686C;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+.plan-price .yen {
+  font-size: 16px;
+  vertical-align: text-bottom;
+  /* これで数字の下のラインに揃う */
+  margin-left: 2px;
+  /* 数字との間隔を微調整 */
+}
+
+/* 各項目 */
+.plan ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 967px;
+}
+
+.plan ul li {
+  border-top: 1.68px solid #6DB1B7;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #42686C;
+}
+
+/* 空白行だけ線を消す */
+.plan ul li.empty-line {
+  border-top: none;
+  /* 線を消す */
+  padding: 0px 0;
+  /* 高さ調整 */
+  color: transparent;
+  /* テキストを透明に */
+}
+
+.plan ul li .item-title {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 4px;
+  /* ← タイトルと中身の間の余白 */
+}
+
+.plan ul li .item-content {
+  display: block;
+}
+
+
+
+
+
+/* 星マーク */
+.plan ul li:last-child {
+  color: #42686C;
+  letter-spacing: 4px;
+}
+
+/* スマホ対応（横3つを画面内に収める） */
+@media (max-width: 768px) {
+
+  /* 全体 */
+  .price-section {
+    overflow-x: hidden;
+    padding-top: 48px !important;
+    /* ← margin-top の代わりにpaddingで余白を作る */
+  }
+
+  .price-header .desc {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #575757;
+    text-align: left;
+    /* 左揃え */
+    max-width: 340px;
+    /* 中央に置くための幅指定 */
+    margin: 10px auto 0;
+    /* 左右中央配置 */
+  }
+
+  /* === 3プラン横並び === */
+  .price-table {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .plan {
+    position: relative;
+  }
+
+  /* 太線（タイトル下に1本だけ） */
+  .plan-line {
+    display: none;
+  }
+
+  .price-table::before {
+    content: "";
+    position: absolute;
+    top: 70px;
+    /* タイトル直下（1行用） */
+    left: 0;
+    width: 100%;
+    height: 4.35px;
+    background-color: #6DB1B7;
+    z-index: 1;
+  }
+
+  /* === 細い線（プラン間でつなげる） === */
+  .plan ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .plan ul li {
+    border-top: 1.68px solid #6DB1B7;
+    border-right: none;
+    border-left: none;
+    margin: 0;
+    padding: 6px 0;
+    font-size: 12px;
+    color: #42686C;
+    line-height: 1.5;
+    box-sizing: border-box;
+  }
+
+  /* 下線も統一 */
+  .plan ul li:last-child {
+    border-bottom: 1.68px solid #6DB1B7;
+  }
+
+  /* プラン同士を1px重ねて線を連結 */
+  .plan+.plan {
+    margin-left: -1.7px;
+  }
+
+  /* 空行（ダミー）は線なしで高さ合わせ） */
+  .plan ul li.empty-line {
+    border-top: none;
+    border-bottom: none;
+    padding: 0;
+    height: 18px;
+    /* 行の高さを他と揃える */
+  }
+
+  /* テキスト系微調整 */
+  .plan-name {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .plan-price {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .plan-price .yen {
+    font-size: 12px;
+  }
+
+  .plan ul li {
+    line-height: 1.5;
+  }
+
+  .plan+.plan {
+    margin-left: -1.2px;
+  }
+
+  /* ← ズレ量に合わせて0.8〜1.5px調整 */
+
+  .plan ul li,
+  .price-table {
+    transform: translateZ(0);
+  }
+}
+
+
+
+
+
+
+
+.flow-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* ブロック全体を中央に */
+  font-family: 'Noto Serif JP', serif;
+  color: #42686C;
+  line-height: 0;
+  margin-bottom: 80px;
+  text-align: center;
+  /* タイトルは中央揃え */
+
+}
+
+.flow-header .kicker {
+  font-size: 20px;
+  line-height: 0;
+
+}
+
+.flow-header h2 {
+  font-size: 28px;
+  line-height: 0.8;
+  margin-top: 1px;
+
+}
+
+
+.flow-section .inner {
+  max-width: 968px;
+  margin: 0 auto;
+}
+
+
+
+/* 各ステップ */
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: 40px;
+  gap: 10px;
+}
+
+.step-title {
+  display: flex;
+  /* 横並びにする */
+  align-items: baseline;
+  /* 数字と名前のベースラインを揃える */
+  gap: 80px;
+  /* step-number と step-name の間隔 */
+  font-size: 24px;
+}
+
+.step-number {
+  color: #42686C;
+  /* step の文字色 */
+  font-weight: 400;
+  font-family: 'Noto Serif JP', serif;
+}
+
+.step-name {
+  color: #32ABB6;
+  /* 受付 の文字だけ色変更 */
+  font-weight: 400;
+  font-family: 'Noto Serif JP', serif;
+}
+
+.step-text {
+  flex: 0 0 45%;
+  /* 幅を固定して中央寄せを効かせる */
+  min-width: auto;
+}
+
+.step-text p {
+  font-size: 16px;
+  line-height: 1.6;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  color: #575757;
+  overflow: visible;
+}
+
+.step-image {
+  flex: 0 0 45%;
+  /* 幅を固定して中央寄せを効かせる */
+  text-align: right;
+}
+
+.step-image img {
+  max-width: 100%;
+  height: 200px;
+  /* 高さを統一 */
+  object-fit: cover;
+  /* はみ出る部分は切るけど均一表示 */
+}
+
+
+@media screen and (max-width: 767px) {
+
+  /* ====== セクション全体 ====== */
+  .flow-section {
+    background-color: #ffffff;
+    padding: 40px 20px;
+  }
+
+  /* ====== タイトル（2行詰め & 2行目大きく） ====== */
+  .flow-header {
+    margin-bottom: 35px;
+    text-align: center;
+    font-family: 'Noto Serif JP', serif;
+    color: #42686C;
+    line-height: 0;
+    /* ← 行間を詰める */
+  }
+
+  .flow-header .kicker {
+    font-size: 16px;
+    line-height: 0;
+    /* ← さらに詰め */
+  }
+
+  .flow-header h2 {
+    font-size: 24px;
+    /* ← 2行目を少し大きく */
+    line-height: 0.8;
+    margin-top: 2px;
+  }
+
+  /* ====== コンテンツ内の幅調整 ====== */
+  .flow-section .inner {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  /* ====== 各ステップ ====== */
+  .step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+    margin-bottom: 30px;
+    text-align: left;
+  }
+
+  .step-item:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ====== タイトル（step）部分 ====== */
+  .step-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 18px;
+    margin-bottom: 3px;
+    width: 100%;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .step-number {
+    color: #42686C;
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 400;
+  }
+
+  .step-name {
+    color: #32ABB6;
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 400;
+  }
+
+  /* ====== テキスト部分（画像の上に移動） ====== */
+  .step-text {
+    order: 1;
+    /* ← 画像より上に */
+    width: 100%;
+    max-width: 340px;
+    text-align: left;
+    margin: 0 auto;
+  }
+
+  .step-text p {
+    font-size: 14px;
+    line-height: 1.7;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #575757;
+  }
+
+  /* ====== 画像部分（角丸なし） ====== */
+  .step-image {
+    order: 2;
+    /* ← テキストの下に来るように */
+    width: 100%;
+    text-align: center;
+  }
+
+  .step-image picture {
+    display: block;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  .step-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0;
+    /* ← 角丸なし */
+  }
+}
+
+
+
+
+
+
+
+.message-section {
+  background-color: #E9F9FA;
+  padding: 40px 20px;
+}
+
+.message-section .inner {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  /* 左右の間隔 */
+  flex-wrap: wrap;
+  /* スマホでは縦並びに */
+}
+
+.message-left {
+  flex: 1;
+  min-width: 200px;
+}
+
+.message-left h2 {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.3;
+  font-family: 'Noto Serif JP', serif;
+}
+
+.message-right {
+  flex: 2;
+  min-width: 250px;
+}
+
+.message-right p {
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* PCでは改行あり */
+.sp-br {
+  display: inline;
+}
+
+
+@media screen and (max-width: 767px) {
+
+  .message-section {
+    background-color: #E9F9FA;
+    padding: 10px 20px 18px 20px;
+  }
+
+  .message-section .inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  /* ===== タイトル ===== */
+  .message-left {
+    flex: none;
+    width: 100%;
+  }
+
+  .message-left h2 {
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 400;
+    font-family: 'Noto Serif JP', serif;
+    color: #42686C;
+    margin-bottom: 8px;
+
+    text-align: left;
+    /* ← 左揃え */
+    width: 100%;
+    max-width: 340px;
+    /* ← 本文と同じ幅に */
+    margin-left: auto;
+    margin-right: auto;
+    /* ← 全体中央に配置 */
+  }
+
+  /* 改行制御（1行用） */
+  .sp-br {
+    display: none !important;
+  }
+
+  /* ===== 本文 ===== */
+  .message-right {
+    flex: none;
+    width: 100%;
+  }
+
+  .message-right p {
+    font-size: 14px;
+    line-height: 1.8;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #575757;
+    text-align: left;
+    width: 100%;
+    max-width: 340px;
+    /* ← タイトルと左端を合わせる */
+    margin: 0 auto;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* webフォーム */
+
+/* ===============================
+   WEB予約セクション
+=============================== */
+.reservation-section {
+  padding: 60px 20px;
+  background-color: #ffffff;
+}
+
+.reservation-section .inner {
+  max-width: 968px;
+  margin: 0 auto;
+  text-align: center;
+  /* タイトル中央 */
+}
+
+/* タイトル */
+.reservation-section h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 400;
+  font-size: 28px;
+  color: #42686C;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+/* 2つのスパンを横並びにする */
+.reservation-section h2 .line1,
+.reservation-section h2 .line2 {
+  display: inline;
+  /* ← PCではインライン表示 */
+  font-size: inherit;
+  /* 親と同じサイズ */
+}
+
+/* ===============================
+   共通設定（全デバイス共通）
+=============================== */
+
+/* フォーム全体 */
+.reservation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: #575757;
+  font-size: 16px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* 各項目（共通） */
+.form-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+/* ラベル */
+.form-group label {
+  width: 120px;
+  text-align: left;
+  font-size: 16px;
+  color: #575757;
+  white-space: nowrap;
+  margin: 0;
+}
+
+/* 入力欄（お名前・E-Mail・TEL） */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"] {
+  width: 300px;
+  height: 45px;
+  border: 2.6px solid #32ABB6;
+  background-color: #F5FDFE;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-family: 'Noto Sans JP', sans-serif;
+  margin-left: 40px;
+}
+
+/* ご予約日・お時間（小さいボックス共通） */
+.reservation-section .form-group.small .select-box {
+  position: relative;
+  display: inline-block;
+  width: 160px;
+  margin-left: 40px;
+}
+
+.reservation-section .form-group.small .select-box input[type="text"] {
+  width: 100%;
+  height: 45px;
+  border: 2.6px solid #32ABB6;
+  background-color: #F5FDFE;
+  font-size: 16px;
+  border-radius: 6px;
+  padding: 10px 46px 10px 12px;
+  box-sizing: border-box;
+  color: #575757;
+}
+
+
+/* ご要望・ご質問など */
+.form-group.large {
+  align-items: flex-start;
+}
+
+.form-group.large label {
+  width: 120px;
+}
+
+.form-group.large textarea {
+  width: 300px;
+  height: 150px;
+  border: 2.6px solid #32ABB6;
+  background-color: #F5FDFE;
+  padding: 10px;
+  font-size: 16px;
+  resize: none;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-family: 'Noto Sans JP', sans-serif;
+  margin-left: 40px;
+}
+
+/* ボタン */
+.reservation-btn {
+  display: inline-block;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  color: #ffffff;
+  background-color: #32ABB6;
+  border: none;
+  border-radius: 30px;
+  padding: 15px 80px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.reservation-btn:hover {
+  background-color: #28a0a0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.button-wrap {
+  text-align: center;
+  margin-top: 30px;
+}
+
+/* ご予約日・お時間フィールド：クリック感UP */
+.select-box {
+  position: relative;
+}
+
+.select-box input {
+  width: 100%;
+  padding: 12px 42px 12px 12px; /* 右側にアイコン分の余白 */
+  font-size: 16px;
+  border: 1px solid #32ABB6;
+  border-radius: 6px;
+  background-color: #f5fcfd;
+  cursor: pointer;
+  transition: 0.2s ease;
+  color: #42686C;
+}
+
+
+
+.select-box svg {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.select-box input:hover + svg {
+  opacity: 1;
+}
+
+/* 入力フォーム（共通デザイン） */
+.reservation-form input,
+.reservation-form textarea {
+  border: 1px solid #D0D0D0;
+  border-radius: 4px;
+  padding: 8px 10px;
+  transition: all 0.2s ease;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: #575757;
+}
+
+/* フォーカス時（クリック中・入力中）の見た目 */
+.reservation-form input:focus,
+.reservation-form textarea:focus {
+  outline: none;
+  border: 2px solid #42686C; /* ← ここで指定した色に変わる */
+  box-shadow: 0 0 6px rgba(87, 87, 87, 0.2); /* ふんわりした光 */
+}
+
+
+/* ホバー時（PC） */
+@media (hover: hover) {
+  .select-box input:hover {
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(50, 171, 182, 0.1);
+  }
+}
+
+/* --- PC版のみアイコン位置を右へ --- */
+@media screen and (min-width: 768px) {
+  .select-box svg {
+    right: 0; /* ← 元の12px → 20pxにして、より右寄せ */
+    width: 18px;
+    height: 18px;
+  }
+
+  /* 入力欄との距離バランス調整 */
+  .select-box input {
+    padding-right: 38px; /* ← アイコンの新しい位置に合わせて余白を少し広げる */
+  }
+}
+
+
+
+
+/* ===============================
+   スマホ版（767px以下）
+=============================== */
+@media screen and (max-width: 767px) {
+
+  /* フォーム全体 */
+  .reservation-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 18px;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+    color: #575757;
+    font-size: 14px;
+    box-sizing: border-box;
+    padding-left: 0;
+  }
+
+  /* タイトル全体 */
+  .reservation-section h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 500;
+    /* ← ここを変えると反映されます */
+    color: #42686C;
+    text-align: left;
+    display: inline-block;
+    margin: 0 auto 25px auto;
+    line-height: 1.5;
+    white-space: normal;
+    font-size: 22px;
+    /* ← 少し大きく */
+  }
+
+  /* 1行目 */
+  .reservation-section h2 .line1 {
+    display: block !important;
+    font-size: 20px !important;
+    margin-left: 5px !important;
+  }
+
+  /* 2行目（「こちらから」） */
+  .reservation-section h2 .line2 {
+    display: block !important;
+    font-size: 22px !important;
+    text-align: left !important;
+    margin-left: 5px !important;
+  }
+
+  /* 各項目 */
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 5px;
+    margin-left: 0;
+  }
+
+  .form-group label {
+    width: 100%;
+    font-size: 14px;
+    color: #575757;
+    text-align: left;
+    font-family: 'Noto Sans JP', sans-serif;
+    margin: 0 0 2px 5px;
+  }
+
+  /* 入力欄共通 */
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="tel"],
+  .form-group textarea {
+    width: calc(100% - 10px);
+    margin-left: 5px;
+    border: 2.6px solid #32ABB6;
+    background-color: #F5FDFE;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-family: 'Noto Sans JP', sans-serif;
+    box-sizing: border-box;
+  }
+
+  /* ご予約日・お時間 */
+  .reservation-section .form-group.small {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .reservation-section .form-group.small .select-box {
+    position: relative;
+    display: inline-block;
+    width: 40%;
+    margin-left: 5px;
+  }
+
+  .reservation-section .form-group.small .select-box input[type="text"] {
+    width: 100%;
+    height: 45px;
+    color: #575757;
+    border: 2.6px solid #32ABB6;
+    background-color: #F5FDFE;
+    border-radius: 6px;
+    padding: 10px 40px 10px 12px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  /*
+  .reservation-section .form-group.small .select-box::after {
+    content: "";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #32ABB6;
+    pointer-events: none;
+  }
+*/
+
+  /* ご要望欄 */
+  .form-group.large textarea {
+    width: calc(100% - 10px);
+    margin-left: 5px;
+    height: 130px;
+  }
+
+  /* ボタン中央配置 */
+  .reservation-section .button-wrap {
+    text-align: center;
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  .reservation-section .reservation-btn {
+    display: inline-block;
+    margin: 0 auto;
+    background-color: #32ABB6;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 80px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+  }
+
+  /* hover（PCの検証画面で確認用） */
+  .reservation-section .reservation-btn:hover {
+    background-color: #28a0a0;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+  }
+}
+
+
+/* ===============================
+   PC版（768px以上）
+=============================== */
+@media screen and (min-width: 768px) {
+
+  .reservation-section .form-group.small {
+    justify-content: flex-start !important;
+  }
+
+  .reservation-section .form-group.small .select-box {
+    position: relative !important;
+    display: inline-block !important;
+    width: 160px !important;
+    margin-left: 0px !important;
+    /* ← 他のinputと同じ位置 */
+  }
+
+  .reservation-section .form-group.small .select-box input[type="text"] {
+    width: 100% !important;
+    height: 45px !important;
+    border: 2.6px solid #32ABB6 !important;
+    background-color: #F5FDFE !important;
+    font-size: 16px !important;
+    border-radius: 6px !important;
+    padding: 10px 46px 10px 12px !important;
+    box-sizing: border-box !important;
+    color: #575757 !important;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.footer {
+  background-color: #E9F9FA;
+  padding: 40px 20px;
+  font-size: 16px;
+  box-sizing: border-box;
+  color: #575757;
+  justify-content: center;
+  min-height: 241px;
+  display: flex;
+  align-items: stretch;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  /* 左右に広げる */
+  align-items: stretch;
+  /* 下揃え */
+  width: 100%;
+  gap: 40px;
+  max-width: 968px;
+}
+
+/* 左側ロゴと住所 */
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.footer-logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo-icon {
+  width: 50px;
+  height: auto;
+}
+
+.footer-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+
+}
+
+.jp-name {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: #575757;
+}
+
+.en-name {
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: #575757;
+}
+
+.footer-left p {
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* 右側 */
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: #575757;
+  height: 100%;
+  padding-top: 80px;
+}
+
+/* 右側上リンク */
+.about-link {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #575757;
+  border: 2px solid #575757;
+  border-radius: 0;
+  padding: 12px 50px;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-bottom: 20px;
+}
+
+.about-link:hover {
+  background-color: #575757;
+  color: #ffffff;
+}
+
+/* 右側下著作権 */
+.footer-right-bottom {
+  margin-top: auto;
+  /* 下に押し出す */
+}
+
+.footer-right-bottom p {
+  margin: 0;
+  font-size: 14px;
+  text-align: right;
+  white-space: nowrap;
+  /* 1行で表示 */
+}
+
+
+@media screen and (max-width: 767px) {
+
+  /* フッター全体 */
+  .footer {
+    padding: 25px 0 30px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100vw !important;
+    /* ← 画面幅いっぱい */
+    margin: 0 !important;
+  }
+
+  /* 内側コンテナ */
+  .footer-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 20px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
+
+  /* 左側（ロゴと住所） */
+  .footer-left {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    /* 中央揃え */
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .footer-logo-wrapper {
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin-top: 25px !important;
+    /* ロゴを少し下げる */
+  }
+
+  .footer-logo-icon {
+    width: 52px !important;
+    height: auto !important;
+  }
+
+  .footer-logo-text {
+    align-items: center !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+    gap: 6px !important;
+    /* 漢字と英字の間隔 */
+  }
+
+  .jp-name {
+    font-size: 24px !important;
+  }
+
+  .en-name {
+    font-size: 13px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  /* 住所：中央揃え・左右余白なし */
+  .footer-left>p {
+    font-size: 10px !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-top: 35px !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    /* ← 左右余白なし */
+  }
+
+  /* ボタン：中央揃え＋左右ぴったり */
+  .footer-right-top {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .about-link {
+    font-size: 16px !important;
+    padding: 9px 42px !important;
+    border-width: 1.8px !important;
+    border-radius: 0 !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    position: relative !important;
+    top: -45px !important;
+    /* 上方向へ移動 */
+    margin: 0 auto !important;
+  }
+
+  /* 著作権：中央・左右余白なし */
+  .footer-right-bottom {
+    margin-top: 0px !important;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 0 !important;
+  }
+
+  .footer-right-bottom p {
+    font-size: 8.5px !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+    opacity: 0.75 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 100% !important;
+  }
+}
